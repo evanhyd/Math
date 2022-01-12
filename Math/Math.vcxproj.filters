@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Fraction">
+      <UniqueIdentifier>{95654237-ba44-4d53-a9b8-27f53418dc91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry">
+      <UniqueIdentifier>{2185ee11-d1b4-498f-bbf6-64eb745e703c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D">
+      <UniqueIdentifier>{9f1e749e-229e-4159-bc09-2558ddc7df26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\3D">
+      <UniqueIdentifier>{738ff1ca-9c7c-43a7-8736-22c9dd061fd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Shape2D">
+      <UniqueIdentifier>{5328d62a-021e-4f8f-bb70-3443d529bfb9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Shape2D\Triangle">
+      <UniqueIdentifier>{b575c35e-d243-4879-8cc9-b9efc813a0ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Shape2D\Circle">
+      <UniqueIdentifier>{d3722f20-a568-403a-8ab2-fe55c3448201}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Shape2D\Rectangle">
+      <UniqueIdentifier>{d573ff4e-bd1b-48ca-b04b-908add57aec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\3D\Shape3D">
+      <UniqueIdentifier>{dcd7d93b-7b68-441d-9809-01f9cd6263e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Coordinate2D">
+      <UniqueIdentifier>{cc136852-2a5a-4de0-87fd-a27645e624f0}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Fraction.cpp">
+      <Filter>Fraction</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape2D.cpp">
+      <Filter>geometry\2D\Shape2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Shape3D.cpp">
+      <Filter>geometry\3D\Shape3D</Filter>
+    </ClCompile>
+    <ClCompile Include="Circle.cpp">
+      <Filter>geometry\2D\Shape2D\Circle</Filter>
+    </ClCompile>
+    <ClCompile Include="Rectangle.cpp">
+      <Filter>geometry\2D\Shape2D\Rectangle</Filter>
+    </ClCompile>
+    <ClCompile Include="Coordinate2D.cpp">
+      <Filter>geometry\2D\Coordinate2D</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Fraction.h">
+      <Filter>Fraction</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape2D.h">
+      <Filter>geometry\2D\Shape2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Shape3D.h">
+      <Filter>geometry\3D\Shape3D</Filter>
+    </ClInclude>
+    <ClInclude Include="Circle.h">
+      <Filter>geometry\2D\Shape2D\Circle</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>geometry\2D\Shape2D\Rectangle</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinate2D.h">
+      <Filter>geometry\2D\Coordinate2D</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
