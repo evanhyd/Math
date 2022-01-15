@@ -1,7 +1,9 @@
 #include "Circle.h"
 #include <numbers>
 
-Circle::Circle(const Coordinate2D& new_pos, const Fraction& new_radius) : Shape2D(new_pos), radius_(new_radius)
+using namespace geometry;
+
+Circle::Circle(const Cartesian2D& new_pos, const Fraction& new_radius) : Shape2D(new_pos), radius_(new_radius)
 {
     //empty
 }
@@ -32,7 +34,7 @@ Fraction Circle::Area() const
     return Fraction(std::numbers::pi) * radius_ * radius_;
 }
 
-bool Circle::IsInside(const Coordinate2D& point) const
+bool Circle::IsPointInside(const Cartesian2D& point) const
 {
-    return (point - pos_).Magnitude() < radius_;
+    return (point - pos_).Magnitude() <= radius_;
 }

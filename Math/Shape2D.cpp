@@ -1,6 +1,8 @@
 #include "Shape2D.h"
 
-Shape2D::Shape2D(const Coordinate2D& new_pos) : pos_(new_pos)
+using namespace geometry;
+
+Shape2D::Shape2D(const Cartesian2D& new_pos) : pos_(new_pos)
 {
     //empty
 }

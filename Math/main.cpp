@@ -1,29 +1,29 @@
 #include <iostream>
+#include <iomanip>
+#include <numbers>
 #include "Fraction.h"
+#include "Polar2D.h"
 
 int main()
 {
-    Fraction::SetPrecision(10);
+    int prec = 8;
+    Fraction::SetPrecision(prec);
 
     while (true)
     {
         try
         {
-            /*Fraction::ValueType n1, d1, n2, d2;
+            double x, y;
+            std::cin >> x >> y;
+            y = y / 180.0 * std::numbers::pi;
+            geometry::Polar2D coord0(x, y); 
 
-            std::cin >> n1 >> d1;
-            Fraction f1(n1, d1);
-
-            std::cin >> n2 >> d2;
-            Fraction f2(n2, d2);*/
-
-            double n1, n2;
-            std::cin >> n1 >> n2;
-            Fraction f1(n1), f2(n2);
-
-            std::cout << (f1 < f2) << '\n';
-            std::cout << (f1 == f2) << '\n';
-
+            std::cin >> x >> y;
+            y = y / 180.0 * std::numbers::pi;
+            geometry::Polar2D coord1(x, y);
+            geometry::Polar2D sum = coord0 + coord1;
+            
+            std::cout <<std::fixed << std::setprecision(prec) << double(sum.GetMagnitude()) << "    " << double(sum.GetAngle()) << '\n';
         }
         catch (const std::exception &error)
         {

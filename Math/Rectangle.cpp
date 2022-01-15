@@ -1,6 +1,8 @@
 #include "Rectangle.h"
 
-Rectangle::Rectangle(const Coordinate2D& new_pos, const Fraction& new_width, const Fraction& new_length) :
+using namespace geometry;
+
+Rectangle::Rectangle(const Cartesian2D& new_pos, const Fraction& new_width, const Fraction& new_length) :
     Shape2D(new_pos), width_(new_width), length_(new_length)
 {
     //empty
@@ -32,8 +34,8 @@ Fraction Rectangle::Area() const
     return width_ * length_;
 }
 
-bool Rectangle::IsInside(const Coordinate2D& point) const
+bool Rectangle::IsPointInside(const Cartesian2D& point) const
 {
-    Coordinate2D relative = point - pos_;
-    return Fraction(0ll) <= relative.x_ && relative.x_ <= width_ && Fraction(0ll) <= relative.y_ && relative.y_ <= length_;
+    Cartesian2D relative = point - pos_;
+    return Fraction(0ll) <= relative.GetX() && relative.GetX() <= width_ && Fraction(0ll) <= relative.GetY() && relative.GetY() <= length_;
 }

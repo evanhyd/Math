@@ -139,8 +139,9 @@ Fraction::operator double() const
 
 std::ostream& operator<<(std::ostream& output, const Fraction& fraction)
 {
-    output << fraction.numerator_;
-    if (fraction.numerator_ != 0 && fraction.denominator_ != 1) output << '/' << fraction.denominator_;
+
+    if (fraction.numerator_ != 0 && fraction.denominator_ != 1) output << fraction.numerator_ << '/' << fraction.denominator_;
+    else output << std::fixed << fraction.numerator_;
 
     return output;
 }

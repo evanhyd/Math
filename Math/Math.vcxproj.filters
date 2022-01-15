@@ -24,9 +24,6 @@
     <Filter Include="geometry\2D\Shape2D">
       <UniqueIdentifier>{5328d62a-021e-4f8f-bb70-3443d529bfb9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="geometry\2D\Shape2D\Triangle">
-      <UniqueIdentifier>{b575c35e-d243-4879-8cc9-b9efc813a0ac}</UniqueIdentifier>
-    </Filter>
     <Filter Include="geometry\2D\Shape2D\Circle">
       <UniqueIdentifier>{d3722f20-a568-403a-8ab2-fe55c3448201}</UniqueIdentifier>
     </Filter>
@@ -36,8 +33,17 @@
     <Filter Include="geometry\3D\Shape3D">
       <UniqueIdentifier>{dcd7d93b-7b68-441d-9809-01f9cd6263e1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="geometry\2D\Coordinate2D">
+    <Filter Include="matrix">
+      <UniqueIdentifier>{21154669-a23e-4c73-9b01-d5fc3b3b0fc7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="matrix\Vector">
+      <UniqueIdentifier>{a1336083-8ca9-49d6-bf55-fcbc06dde0cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Cartesian2D">
       <UniqueIdentifier>{cc136852-2a5a-4de0-87fd-a27645e624f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="geometry\2D\Polar2D">
+      <UniqueIdentifier>{e111daea-949b-4ef2-9407-49fda5e777cf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -59,8 +65,14 @@
     <ClCompile Include="Rectangle.cpp">
       <Filter>geometry\2D\Shape2D\Rectangle</Filter>
     </ClCompile>
-    <ClCompile Include="Coordinate2D.cpp">
-      <Filter>geometry\2D\Coordinate2D</Filter>
+    <ClCompile Include="Cartesian2D.cpp">
+      <Filter>geometry\2D\Cartesian2D</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector.cpp">
+      <Filter>matrix\Vector</Filter>
+    </ClCompile>
+    <ClCompile Include="Polar2D.cpp">
+      <Filter>geometry\2D\Polar2D</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,8 +91,14 @@
     <ClInclude Include="Rectangle.h">
       <Filter>geometry\2D\Shape2D\Rectangle</Filter>
     </ClInclude>
-    <ClInclude Include="Coordinate2D.h">
-      <Filter>geometry\2D\Coordinate2D</Filter>
+    <ClInclude Include="Cartesian2D.h">
+      <Filter>geometry\2D\Cartesian2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector.h">
+      <Filter>matrix\Vector</Filter>
+    </ClInclude>
+    <ClInclude Include="Polar2D.h">
+      <Filter>geometry\2D\Polar2D</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

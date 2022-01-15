@@ -1,31 +1,33 @@
 #pragma once
 #include "Fraction.h"
-#include "Coordinate2D.h"
+#include "Cartesian2D.h"
 
-class Circle;
-//class Triangle;
-class Rectangle;
 
-class Shape2D
+namespace geometry
 {
-protected:
-    Coordinate2D pos_;
+    class Circle;
+    class Rectangle;
 
-public:
-    Shape2D(const Coordinate2D& new_pos);
+    class Shape2D
+    {
+    protected:
+        Cartesian2D pos_;
 
-    virtual bool operator==(const Shape2D& other) const = 0;
-    virtual bool operator!=(const Shape2D& other) const = 0;
+    public:
+        Shape2D(const Cartesian2D& new_pos);
 
-    virtual bool equals(const Circle& other) const;
-    virtual bool equals(const Rectangle& other) const;
-    /*virtual bool equals(const Triangle& other);
-    */
+        virtual bool operator==(const Shape2D& other) const = 0;
+        virtual bool operator!=(const Shape2D& other) const = 0;
 
-public:
-    virtual Fraction Perimeter() const = 0;
-    virtual Fraction Area() const = 0;
-    virtual bool IsInside(const Coordinate2D& point) const = 0;
-    //virtual bool Overlap(const Shape& Shape2D) const = 0;
-};
+        virtual bool equals(const Circle& other) const;
+        virtual bool equals(const Rectangle& other) const;
+        /*virtual bool equals(const Triangle& other);
+        */
 
+    public:
+        virtual Fraction Perimeter() const = 0;
+        virtual Fraction Area() const = 0;
+        virtual bool IsPointInside(const Cartesian2D& point) const = 0;
+        //virtual bool Overlap(const Shape& Shape2D) const = 0;
+    };
+}
