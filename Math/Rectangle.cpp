@@ -2,7 +2,7 @@
 
 using namespace geometry;
 
-Rectangle::Rectangle(const Cartesian2D& new_pos, const Fraction& new_width, const Fraction& new_length) :
+Rectangle::Rectangle(const Cartesian2D& new_pos, double new_width, double new_length) :
     Shape2D(new_pos), width_(new_width), length_(new_length)
 {
     //empty
@@ -23,12 +23,12 @@ bool Rectangle::equals(const Rectangle& other) const
 }
 
 
-Fraction Rectangle::Perimeter() const
+double Rectangle::Perimeter() const
 {
     //2 * PI * r
     return (width_ + length_) * 2ll;
 }
-Fraction Rectangle::Area() const
+double Rectangle::Area() const
 {
     //PI * r^2
     return width_ * length_;
@@ -37,5 +37,5 @@ Fraction Rectangle::Area() const
 bool Rectangle::IsPointInside(const Cartesian2D& point) const
 {
     Cartesian2D relative = point - pos_;
-    return Fraction(0ll) <= relative.GetX() && relative.GetX() <= width_ && Fraction(0ll) <= relative.GetY() && relative.GetY() <= length_;
+    return 0.0 <= relative.GetX() && relative.GetX() <= width_ && 0.0 <= relative.GetY() && relative.GetY() <= length_;
 }

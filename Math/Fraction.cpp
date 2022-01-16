@@ -9,13 +9,6 @@ Fraction::Fraction(ValueType new_numerator, ValueType new_denominator) : numerat
     this->Reduce();
 }
 
-Fraction::Fraction(double number)
-{
-    numerator_ = static_cast<ValueType>(number * kDoubleToIntPrecision);
-    denominator_ = static_cast<ValueType>(kDoubleToIntPrecision);
-    this->Reduce();
-}
-
 void Fraction::operator+=(const Fraction& addend)
 {
     ValueType lcd = std::lcm(denominator_, addend.denominator_);
@@ -113,14 +106,10 @@ bool Fraction::operator<=(const Fraction& other) const
     return !(*this > other);
 }
 
-Fraction sqrt(const Fraction& fraction)
-{
-    return Fraction(sqrt(double(fraction)));
-}
 
 Fraction pow(Fraction fraction, size_t exp)
 {
-    Fraction power = 1ll;
+    Fraction power(1ll, 1ll);
 
     while (exp > 0)
     {
@@ -139,7 +128,6 @@ Fraction::operator double() const
 
 std::ostream& operator<<(std::ostream& output, const Fraction& fraction)
 {
-
     if (fraction.numerator_ != 0 && fraction.denominator_ != 1) output << fraction.numerator_ << '/' << fraction.denominator_;
     else output << std::fixed << fraction.numerator_;
 
@@ -152,8 +140,6 @@ bool Fraction::IsInteger() const
 {
     return denominator_ == 1;
 }
-
-
 
 
 
@@ -172,13 +158,4 @@ void Fraction::Reduce()
         numerator_ /= gcd;
         denominator_ /= gcd;
     }
-}
-
-
-
-//static
-double Fraction::kDoubleToIntPrecision = 100000.0;
-void Fraction::SetPrecision(size_t decimal_digits)
-{
-    kDoubleToIntPrecision = std::pow(10.0, decimal_digits);
 }

@@ -3,7 +3,7 @@
 
 using namespace geometry;
 
-Circle::Circle(const Cartesian2D& new_pos, const Fraction& new_radius) : Shape2D(new_pos), radius_(new_radius)
+Circle::Circle(const Cartesian2D& new_pos, double new_radius) : Shape2D(new_pos), radius_(new_radius)
 {
     //empty
 }
@@ -23,15 +23,15 @@ bool Circle::equals(const Circle& other) const
 }
 
 
-Fraction Circle::Perimeter() const
+double Circle::Perimeter() const
 {
     //2 * PI * r
-    return Fraction(2ll) * Fraction(std::numbers::pi) * radius_;
+    return 2.0 * std::numbers::pi * radius_;
 }
-Fraction Circle::Area() const
+double Circle::Area() const
 {
     //PI * r^2
-    return Fraction(std::numbers::pi) * radius_ * radius_;
+    return std::numbers::pi * radius_ * radius_;
 }
 
 bool Circle::IsPointInside(const Cartesian2D& point) const

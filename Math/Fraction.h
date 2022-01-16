@@ -12,9 +12,7 @@ private:
 
 public:
 
-    Fraction(ValueType new_numerator, ValueType new_denominator = 1);
-    Fraction(double number);
-
+    explicit Fraction(ValueType new_numerator, ValueType new_denominator);
 
     //arithmetic
     void operator+=(const Fraction& addend);
@@ -36,7 +34,6 @@ public:
 
     explicit operator double() const;
 
-    friend Fraction sqrt(const Fraction& fraction);
     friend Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
     friend std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
 
@@ -45,19 +42,8 @@ public:
 public:
     bool IsInteger() const;
 
-
 //private
 private:
     void Reduce();
-
-
-
-
-//static members
-private:
-    static double kDoubleToIntPrecision;
-
-public:
-    static void SetPrecision(size_t decimal_digits);
 };
 

@@ -3,7 +3,7 @@
 
 using namespace geometry;
 
-Polar2D::Polar2D(const Fraction& new_magnitude, const Fraction& new_angle) : magnitude_(new_magnitude), angle_(new_angle)
+Polar2D::Polar2D(double new_magnitude, double new_angle) : magnitude_(new_magnitude), angle_(new_angle)
 {
     //empty
 }
@@ -19,25 +19,25 @@ bool Polar2D::operator!=(const Polar2D& other) const
      
 void Polar2D::operator+=(const Polar2D& addend)
 {
-    Fraction x = magnitude_ * cos(double(angle_)) + addend.magnitude_ * cos(double(addend.angle_));
-    Fraction y = magnitude_ * sin(double(angle_)) + addend.magnitude_ * sin(double(addend.angle_));
+    double x = magnitude_ * cos(angle_) + addend.magnitude_ * cos(addend.angle_);
+    double y = magnitude_ * sin(angle_) + addend.magnitude_ * sin(addend.angle_);
 
-    magnitude_ = sqrt(x * x + y * y);
-    angle_ = atan2(double(y), double(x));
+    magnitude_ = hypot(x, y);
+    angle_ = atan2(y, x);
 }
 void Polar2D::operator-=(const Polar2D& subtrahend)
 {
-    Fraction x = magnitude_ * cos(double(angle_)) - subtrahend.magnitude_ * cos(double(subtrahend.angle_));
-    Fraction y = magnitude_ * sin(double(angle_)) - subtrahend.magnitude_ * sin(double(subtrahend.angle_));
+    double x = magnitude_ * cos(angle_) - subtrahend.magnitude_ * cos(subtrahend.angle_);
+    double y = magnitude_ * sin(angle_) - subtrahend.magnitude_ * sin(subtrahend.angle_);
 
-    magnitude_ = sqrt(x * x + y * y);
-    angle_ = atan2(double(y), double(x));
+    magnitude_ = hypot(x, y);
+    angle_ = atan2(y, x);
 }
-void Polar2D::operator*=(const Fraction& scalar)
+void Polar2D::operator*=(double scalar)
 {
     magnitude_ *= scalar;
 }
-void Polar2D::operator/=(const Fraction& divisor)
+void Polar2D::operator/=(double divisor)
 {
     magnitude_ /= divisor;
 }
@@ -54,13 +54,13 @@ Polar2D Polar2D::operator- (const Polar2D& subtrahend) const
     difference -= subtrahend;
     return difference;
 }
-Polar2D Polar2D::operator* (const Fraction& scalar) const
+Polar2D Polar2D::operator* (double scalar) const
 {
     Polar2D product = *this;
     product *= scalar;
     return product;
 }
-Polar2D Polar2D::operator/(const Fraction& divisor) const
+Polar2D Polar2D::operator/(double divisor) const
 {
     Polar2D quotient = *this;
     quotient /= divisor;
@@ -68,28 +68,28 @@ Polar2D Polar2D::operator/(const Fraction& divisor) const
 }
 
 
-const Fraction& Polar2D::GetMagnitude() const
+double Polar2D::GetMagnitude() const
 {
     return magnitude_;
 }
-const Fraction& Polar2D::GetAngle() const
+double Polar2D::GetAngle() const
 {
     return angle_;
 }
-void Polar2D::SetMagnitude(const Fraction& new_magnitude)
+void Polar2D::SetMagnitude(double new_magnitude)
 {
     magnitude_ = new_magnitude;
 }
-void Polar2D::SetAngle(const Fraction& new_angle)
+void Polar2D::SetAngle(double new_angle)
 {
     angle_ = new_angle;
 }
 
 Polar2D Polar2D::UnitPolar() const
 {
-    return Polar2D(Fraction(1ll), angle_);
+    return Polar2D(1.0, angle_);
 }
 bool Polar2D::IsZero() const
 {
-    return magnitude_ == 0ll;
+    return magnitude_ == 0.0;
 }
