@@ -15,10 +15,10 @@ public:
     explicit Fraction(ValueType new_numerator, ValueType new_denominator);
 
     //arithmetic
-    void operator+=(const Fraction& addend);
-    void operator-=(const Fraction& subtrahend);
-    void operator*=(const Fraction& scalar);
-    void operator/=(const Fraction& divisor);
+    Fraction& operator+= (const Fraction & addend);
+    Fraction& operator-= (const Fraction & subtrahend);
+    Fraction& operator*= (const Fraction & scalar);
+    Fraction& operator/=(const Fraction& divisor);
 
     Fraction operator+(const Fraction& addend) const;
     Fraction operator-(const Fraction& difference) const;

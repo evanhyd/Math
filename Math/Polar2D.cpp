@@ -17,54 +17,56 @@ bool Polar2D::operator!=(const Polar2D& other) const
     return  !(*this == other);
 }
      
-void Polar2D::operator+=(const Polar2D& addend)
+Polar2D& Polar2D::operator+=(const Polar2D& addend)
 {
     double x = magnitude_ * cos(angle_) + addend.magnitude_ * cos(addend.angle_);
     double y = magnitude_ * sin(angle_) + addend.magnitude_ * sin(addend.angle_);
 
     magnitude_ = hypot(x, y);
     angle_ = atan2(y, x);
+
+    return *this;
 }
-void Polar2D::operator-=(const Polar2D& subtrahend)
+Polar2D& Polar2D::operator-=(const Polar2D& subtrahend)
 {
     double x = magnitude_ * cos(angle_) - subtrahend.magnitude_ * cos(subtrahend.angle_);
     double y = magnitude_ * sin(angle_) - subtrahend.magnitude_ * sin(subtrahend.angle_);
 
     magnitude_ = hypot(x, y);
     angle_ = atan2(y, x);
+
+    return *this;
 }
-void Polar2D::operator*=(double scalar)
+Polar2D& Polar2D::operator*=(double scalar)
 {
     magnitude_ *= scalar;
+    return *this;
 }
-void Polar2D::operator/=(double divisor)
+Polar2D& Polar2D::operator/=(double divisor)
 {
     magnitude_ /= divisor;
+    return *this;
 }
 
-Polar2D Polar2D::operator+ (const Polar2D& addend) const
+Polar2D Polar2D::operator+(const Polar2D& addend) const
 {
     Polar2D sum = *this;
-    sum += addend;
-    return sum;
+    return sum += addend;
 }
-Polar2D Polar2D::operator- (const Polar2D& subtrahend) const
+Polar2D Polar2D::operator-(const Polar2D& subtrahend) const
 {
     Polar2D difference = *this;
-    difference -= subtrahend;
-    return difference;
+    return difference -= subtrahend;
 }
-Polar2D Polar2D::operator* (double scalar) const
+Polar2D Polar2D::operator*(double scalar) const
 {
     Polar2D product = *this;
-    product *= scalar;
-    return product;
+    return product *= scalar;
 }
 Polar2D Polar2D::operator/(double divisor) const
 {
     Polar2D quotient = *this;
-    quotient /= divisor;
-    return quotient;
+    return quotient /= divisor;
 }
 
 

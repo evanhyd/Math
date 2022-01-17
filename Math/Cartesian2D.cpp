@@ -17,50 +17,50 @@ bool Cartesian2D::operator!=(const Cartesian2D& other) const
     return !(*this == other);
 }
 
-void Cartesian2D::operator+=(const Cartesian2D& addend)
+Cartesian2D& Cartesian2D::operator+=(const Cartesian2D& addend)
 {
     x_ += addend.x_;
     y_ += addend.y_;
+    return *this;
 }
-void Cartesian2D::operator-=(const Cartesian2D& subtrahend)
+Cartesian2D& Cartesian2D::operator-=(const Cartesian2D& subtrahend)
 {
     x_ -= subtrahend.x_;
     y_ -= subtrahend.y_;
+    return *this;
 }
-void Cartesian2D::operator*=(double scalar)
+Cartesian2D& Cartesian2D::operator*=(double scalar)
 {
     x_ *= scalar;
     y_ *= scalar;
+    return *this;
 }
-void Cartesian2D::operator/=(double divisor)
+Cartesian2D& Cartesian2D::operator/=(double divisor)
 {
     x_ /= divisor;
     y_ /= divisor;
+    return *this;
 }
 
 Cartesian2D Cartesian2D::operator+(const Cartesian2D& addend) const
 {
     Cartesian2D sum = *this;
-    sum += addend;
-    return sum;
+    return sum += addend;
 }
 Cartesian2D Cartesian2D::operator-(const Cartesian2D& subtrahend) const
 {
     Cartesian2D difference = *this;
-    difference -= subtrahend;
-    return difference;
+    return difference -= subtrahend;
 }
 Cartesian2D Cartesian2D::operator*(double scalar) const
 {
     Cartesian2D product = *this;
-    product *= scalar;
-    return product;
+    return product *= scalar;
 }
 Cartesian2D Cartesian2D::operator/(double divisor) const
 {
     Cartesian2D quotient = *this;
-    quotient /= divisor;
-    return quotient;
+    return quotient /= divisor;
 }
 
 

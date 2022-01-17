@@ -14,10 +14,10 @@ namespace geometry
         bool operator==(const Cartesian2D& other) const;
         bool operator!=(const Cartesian2D& other) const;
 
-        void operator+=(const Cartesian2D& addend);
-        void operator-=(const Cartesian2D& subtrahend);
-        void operator*=(double scalar);
-        void operator/=(double divisor);
+        Cartesian2D& operator+=(const Cartesian2D& addend);
+        Cartesian2D& operator-=(const Cartesian2D& subtrahend);
+        Cartesian2D& operator*=(double scalar);
+        Cartesian2D& operator/=(double divisor);
 
         Cartesian2D operator+(const Cartesian2D& addend) const;
         Cartesian2D operator-(const Cartesian2D& subtrahend) const;

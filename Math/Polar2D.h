@@ -14,10 +14,10 @@ namespace geometry
         bool operator==(const Polar2D& other) const;
         bool operator!=(const Polar2D& other) const;
 
-        void operator+=(const Polar2D& addend);
-        void operator-=(const Polar2D& subtrahend);
-        void operator*=(double scalar);
-        void operator/=(double divisor);
+        Polar2D& operator+=(const Polar2D& addend);
+        Polar2D& operator-=(const Polar2D& subtrahend);
+        Polar2D& operator*=(double scalar);
+        Polar2D& operator/=(double divisor);
 
         Polar2D operator+ (const Polar2D& addend) const;
         Polar2D operator- (const Polar2D& subtrahend) const;

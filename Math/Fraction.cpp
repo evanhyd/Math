@@ -9,7 +9,7 @@ Fraction::Fraction(ValueType new_numerator, ValueType new_denominator) : numerat
     this->Reduce();
 }
 
-void Fraction::operator+=(const Fraction& addend)
+Fraction& Fraction::operator+=(const Fraction& addend)
 {
     ValueType lcd = std::lcm(denominator_, addend.denominator_);
     ValueType scalar1 = lcd / denominator_;
@@ -19,8 +19,9 @@ void Fraction::operator+=(const Fraction& addend)
     denominator_ = lcd;
 
     this->Reduce();
+    return *this;
 }
-void Fraction::operator-=(const Fraction& subtrahend)
+Fraction& Fraction::operator-=(const Fraction& subtrahend)
 {
     ValueType lcd = std::lcm(denominator_, subtrahend.denominator_);
     ValueType scalar1 = lcd / denominator_;
@@ -30,15 +31,17 @@ void Fraction::operator-=(const Fraction& subtrahend)
     denominator_ = lcd;
 
     this->Reduce();
+    return *this;
 }
-void Fraction::operator*=(const Fraction& scalar)
+Fraction& Fraction::operator*=(const Fraction& scalar)
 {
     numerator_ *= scalar.numerator_;
     denominator_ *= scalar.denominator_;
 
     this->Reduce();
+    return *this;
 }
-void Fraction::operator/=(const Fraction& divisor)
+Fraction& Fraction::operator/=(const Fraction& divisor)
 {
     if(divisor.numerator_ == 0) throw std::runtime_error("Invalid denominator value: 0");
 
@@ -46,31 +49,28 @@ void Fraction::operator/=(const Fraction& divisor)
     denominator_ *= divisor.numerator_;
 
     this->Reduce();
+    return *this;
 }
 
 Fraction Fraction::operator+(const Fraction& addend) const
 {
     Fraction sum = *this;
-    sum += addend;
-    return sum;
+    return sum += addend;
 }
 Fraction Fraction::operator-(const Fraction& subtrahend) const
 {
     Fraction difference = *this;
-    difference -= subtrahend;
-    return difference;
+    return difference -= subtrahend;
 }
 Fraction Fraction::operator*(const Fraction& scalar) const
 {
     Fraction product = *this;
-    product *= scalar;
-    return product;
+    return product *= scalar;
 }
 Fraction Fraction::operator/(const Fraction& divisor) const
 {
     Fraction quotient = *this;
-    quotient /= divisor;
-    return quotient;
+    return quotient /= divisor;
 }
 
 bool Fraction::operator==(const Fraction& other) const

@@ -45,6 +45,9 @@
     <Filter Include="geometry\2D\Polar2D">
       <UniqueIdentifier>{e111daea-949b-4ef2-9407-49fda5e777cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="matrix\Matrix">
+      <UniqueIdentifier>{7a54524b-cd7b-4857-86a4-03d5903b5185}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -74,6 +77,9 @@
     <ClCompile Include="Polar2D.cpp">
       <Filter>geometry\2D\Polar2D</Filter>
     </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>matrix\Matrix</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fraction.h">
@@ -99,6 +105,9 @@
     </ClInclude>
     <ClInclude Include="Polar2D.h">
       <Filter>geometry\2D\Polar2D</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix.h">
+      <Filter>matrix\Matrix</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -149,6 +149,7 @@
     <ClCompile Include="Cartesian2D.cpp" />
     <ClCompile Include="Fraction.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Polar2D.cpp" />
     <ClCompile Include="Rectangle.cpp" />
     <ClCompile Include="Shape2D.cpp" />
@@ -159,6 +160,7 @@
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Cartesian2D.h" />
     <ClInclude Include="Fraction.h" />
+    <ClInclude Include="Matrix.h" />
     <ClInclude Include="Polar2D.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="Shape2D.h" />
