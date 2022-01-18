@@ -2,34 +2,38 @@
 #include <iomanip>
 #include <numbers>
 #include <numeric>
+#include "debug.h"
+
+#include "Vector.h"
 #include "Matrix.h"
 
 
-#define DEBUG
-#ifdef DEBUG
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#endif
+using namespace matrix;
+
+void Test(matrix::Vector&& vec)
+{
+    std::cout << "change value\n";
+    vec[2] = 10;
+}
 
 int main()
 {
-    #ifdef DEBUG
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
-    #endif
-
+    DEBUG_MEMORY();
     
     while (true)
     {
         try
         {
-            int x, y, z;
+            int x, y;
+            double z;
             std::cin >> x >> y >> z; 
-            matrix::Matrix m1(x, y, z), m2{ {1, 2, 3} ,{4, 5, 6}, {7, 8, 9} };
+            matrix::Matrix m1(x, y, z), m2{ {2, 1, 1} ,{1, 2, 1}, {1, 1, 2} };
 
             std::cout << m1 << '\n';
             std::cout << m2 << '\n';
             std::cout << (m1 + m2) << '\n';
+            std::cout << m1.IsStandard() << '\n';
+            std::cout << (m2 - m1).IsStandard() << '\n';
 
         }
         catch (const std::exception &error)

@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClCompile Include="Circle.cpp" />
     <ClCompile Include="Cartesian2D.cpp" />
+    <ClCompile Include="debug.cpp" />
     <ClCompile Include="Fraction.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrix.cpp" />
@@ -159,6 +160,7 @@
   <ItemGroup>
     <ClInclude Include="Circle.h" />
     <ClInclude Include="Cartesian2D.h" />
+    <ClInclude Include="debug.h" />
     <ClInclude Include="Fraction.h" />
     <ClInclude Include="Matrix.h" />
     <ClInclude Include="Polar2D.h" />

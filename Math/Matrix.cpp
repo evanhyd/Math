@@ -1,47 +1,58 @@
 #include "Matrix.h"
+#include "debug.h"
 #include <algorithm>
 
+#define DEBUG_MODE true
+
 using namespace matrix;
+
 
 Matrix::Matrix() :
     row_size_(0), column_size_(0), data_(nullptr)
 {
-    //empty
+    // empty
+    DEBUG_LOG("matrix default constructor", DEBUG_MODE);
 }
 Matrix::Matrix(std::initializer_list<Vector> lst) : 
     row_size_(lst.size()), column_size_(lst.begin()->Dim()), data_(new Vector[lst.size()])
 {
+    DEBUG_LOG("matrix list constructor", DEBUG_MODE);
     std::move(lst.begin(), lst.end(), data_);
 }
 Matrix::Matrix(size_t new_row_size, size_t new_column_size, double new_value) :
     row_size_(new_row_size), column_size_(new_column_size), data_(new Vector[new_row_size])
 {
-    std::for_each_n(data_, row_size_, [this, new_value](Vector& vec) {vec = std::move(Vector(this->column_size_, new_value)); });
+    DEBUG_LOG("matrix direct constructor", DEBUG_MODE);
+    std::for_each(data_, data_ + row_size_, [this, new_value](Vector& vec) {vec = std::move(Vector(this->column_size_, new_value)); });
 }
 Matrix::Matrix(const Matrix& other) :
-    row_size_(other.row_size_), column_size_(other.column_size_)
+    row_size_(other.row_size_), column_size_(other.column_size_), data_(new Vector[other.row_size_])
 {
-    data_ = new Vector[row_size_];
-    std::copy_n(other.data_, row_size_, data_);
+    DEBUG_LOG("matrix copy constructor", DEBUG_MODE);
+    std::copy(other.data_, other.data_ + row_size_, data_);
 }
 Matrix::Matrix(Matrix&& other) noexcept :
-    row_size_(other.row_size_), column_size_(other.column_size_), data_(other.data_)
+    Matrix()
 {
-    other.data_ = nullptr;
+    DEBUG_LOG("matrix move constructor", DEBUG_MODE);
+    swap(*this, other);
 }
 Matrix::~Matrix()
 {
+    DEBUG_LOG("matrix destructor", DEBUG_MODE);
     delete[] data_;
 }
 
 Matrix& Matrix::operator=(const Matrix& other)
 {
+    DEBUG_LOG("matrix copy assignment", DEBUG_MODE);
     Matrix temp(other);
     swap(*this, temp);
     return *this;
 }
 Matrix& Matrix::operator=(Matrix&& other) noexcept
 {
+    DEBUG_LOG("matrix move assignment", DEBUG_MODE);
     Matrix temp(std::move(other));
     swap(*this, temp);
     return *this;
@@ -65,7 +76,7 @@ bool Matrix::operator!=(const Matrix& other) const
 }
 Matrix& Matrix::operator+=(const Matrix& addend)
 {
-    if (!this->IsSameDimension(addend)) throw std::domain_error("addend matrix has different dimension");
+    if (!this->IsSameDim(addend)) throw std::domain_error("addend matrix has different dimension");
     for (size_t x = 0; x < row_size_; ++x)
     {
         data_[x] += addend.data_[x];
@@ -75,7 +86,7 @@ Matrix& Matrix::operator+=(const Matrix& addend)
 }
 Matrix& Matrix::operator-=(const Matrix& subtrahend)
 {
-    if (!this->IsSameDimension(subtrahend)) throw std::domain_error("subtrahend matrix has different dimension");
+    if (!this->IsSameDim(subtrahend)) throw std::domain_error("subtrahend matrix has different dimension");
     for (size_t x = 0; x < row_size_; ++x)
     {
         data_[x] -= subtrahend.data_[x];
@@ -86,21 +97,58 @@ Matrix& Matrix::operator-=(const Matrix& subtrahend)
 Matrix Matrix::operator+(const Matrix& addend) const
 {
     Matrix sum(*this);
-    return sum += addend;
+    sum += addend;
+    return sum;
 }
 Matrix Matrix::operator-(const Matrix& subtrahend) const
 {
     Matrix difference(*this);
-    return difference -= subtrahend;
+    difference -= subtrahend;
+    return difference;
+}
+
+Vector& Matrix::operator[](size_t i)
+{
+    return data_[i];
 }
 
 
-
+size_t Matrix::RowDim() const
+{
+    return row_size_;
+}
+size_t Matrix::ColumnDim() const
+{
+    return column_size_;
+}
 bool Matrix::IsZero() const
 {
     for (size_t x = 0; x < row_size_; ++x)
     {
         if (!data_[x].IsZero()) return false;
+    }
+
+    return true;
+}
+void Matrix::SetZero()
+{
+    for (size_t x = 0; x < row_size_; ++x)
+    {
+        data_[x].SetZero();
+    }
+}
+
+bool Matrix::IsStandard() const
+{
+    if (row_size_ != column_size_) return false;
+
+    for (size_t x = 0; x < row_size_; ++x)
+    {
+        for (size_t y = 0; y < column_size_; ++y)
+        {
+            if (x == y && data_[x][y] != 1.0) return false;
+            else if (x != y && data_[x][y] != 0.0) return false;
+        }
     }
 
     return true;
@@ -118,9 +166,7 @@ bool Matrix::IsZero() const
 
 
 
-
-
-bool Matrix::IsSameDimension(const Matrix& other) const
+bool Matrix::IsSameDim(const Matrix& other) const
 {
     return row_size_ == other.row_size_ && column_size_ == other.column_size_;
 }

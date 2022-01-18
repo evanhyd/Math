@@ -20,8 +20,6 @@ namespace matrix
         Vector& operator=(const Vector& other);
         Vector& operator=(Vector&& other) noexcept;
 
-        double& operator[](size_t i);
-
         bool operator==(const Vector& other) const;
         bool operator!=(const Vector& other) const;
 
@@ -32,12 +30,16 @@ namespace matrix
         Vector operator-(const Vector& subtrahend) const;
         Vector operator*(double scalar) const;
 
-        double Dot(const Vector& other) const;
-        bool IsZero() const;
+        double& operator[](size_t i);
+
         size_t Dim() const;
+        bool IsZero() const;
+        void SetZero();
+
+        double Dot(const Vector& other) const;
 
     private:
-        bool IsSameDimension(const Vector& other) const;
+        bool IsSameDim(const Vector& other) const;
 
         friend std::ostream& operator<<(std::ostream& output, const Vector& vec);
         friend void swap(Vector& v1, Vector& v2);

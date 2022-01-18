@@ -28,11 +28,18 @@ namespace matrix
         Matrix operator+(const Matrix& addend) const;
         Matrix operator-(const Matrix& subtrahend) const;
 
+        Vector& operator[](size_t i);
 
+
+        size_t RowDim() const;
+        size_t ColumnDim() const;
         bool IsZero() const;
+        void SetZero();
+        bool IsStandard() const;
+
+        bool IsSameDim(const Matrix& other) const;
 
     private:
-        bool IsSameDimension(const Matrix& other) const;
 
         friend std::ostream& operator<<(std::ostream& output, const Matrix& matrix);
         friend void swap(Matrix& m1, Matrix& m2);

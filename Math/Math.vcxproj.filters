@@ -48,6 +48,9 @@
     <Filter Include="matrix\Matrix">
       <UniqueIdentifier>{7a54524b-cd7b-4857-86a4-03d5903b5185}</UniqueIdentifier>
     </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{f75eed08-3ee2-402c-9b86-bbc88bc711ee}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -80,6 +83,9 @@
     <ClCompile Include="Matrix.cpp">
       <Filter>matrix\Matrix</Filter>
     </ClCompile>
+    <ClCompile Include="debug.cpp">
+      <Filter>debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Fraction.h">
@@ -108,6 +114,9 @@
     </ClInclude>
     <ClInclude Include="Matrix.h">
       <Filter>matrix\Matrix</Filter>
+    </ClInclude>
+    <ClInclude Include="debug.h">
+      <Filter>debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
