@@ -51,7 +51,10 @@ int main()
             std::cout << (m1 * m2) << std::endl;
 
             std::cout << "Power:\n";
-            std::cout << matrix::pow(m1, 5) << std::endl;
+            std::cout << matrix::pow(m1, 5) << '\n';
+
+            std::cout << "Transpoed:\n";
+            std::cout << m2.Transpose() << '\n';
 
         }
         catch (const std::exception &error)

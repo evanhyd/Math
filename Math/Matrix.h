@@ -41,6 +41,8 @@ namespace matrix
 
         void SetZero();
         void SetIdentity();
+        Matrix& Scale(double scalar);
+        Matrix Transpose() const;
 
     private:
 

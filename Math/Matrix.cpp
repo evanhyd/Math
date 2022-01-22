@@ -196,6 +196,32 @@ void Matrix::SetIdentity()
         }
     }
 }
+Matrix& Matrix::Scale(double scalar)
+{
+    for (size_t i = 0; i < row_size_; ++i)
+    {
+        for (size_t j = 0; j < column_size_; ++j)
+        {
+            data_[i][j] *= scalar;
+        }
+    }
+
+    return *this;
+}
+Matrix Matrix::Transpose() const
+{
+    Matrix transposed(column_size_, row_size_);
+    
+    for (size_t i = 0; i < transposed.row_size_; ++i)
+    {
+        for (size_t j = 0; j < transposed.column_size_; ++j)
+        {
+            transposed.data_[i][j] = data_[j][i];
+        }
+    }
+
+    return transposed;
+}
 
 
 
