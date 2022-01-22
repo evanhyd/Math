@@ -27,6 +27,7 @@ namespace matrix
         Matrix& operator-=(const Matrix& subtrahend);
         Matrix operator+(const Matrix& addend) const;
         Matrix operator-(const Matrix& subtrahend) const;
+        Matrix operator*(const Matrix& other) const;
 
         Vector& operator[](size_t i);
 
@@ -34,12 +35,16 @@ namespace matrix
         size_t RowDim() const;
         size_t ColumnDim() const;
         bool IsZero() const;
-        void SetZero();
-        bool IsStandard() const;
-
+        bool IsIdentity() const;
+        bool IsSquare() const;
         bool IsSameDim(const Matrix& other) const;
 
+        void SetZero();
+        void SetIdentity();
+
     private:
+
+        static constexpr double kEpsilon = 0.0000001;
 
         friend std::ostream& operator<<(std::ostream& output, const Matrix& matrix);
         friend void swap(Matrix& m1, Matrix& m2);
@@ -47,5 +52,6 @@ namespace matrix
 
     std::ostream& operator<<(std::ostream& output, const Matrix& matrix);
     void swap(Matrix& m1, Matrix& m2);
+    Matrix pow(Matrix matrix, size_t exp);
 }
 

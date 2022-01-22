@@ -2,6 +2,7 @@
 #include <stdexcept>
 #include <numeric>
 
+using namespace number;
 
 Fraction::Fraction(ValueType new_numerator, ValueType new_denominator) : numerator_(new_numerator), denominator_(new_denominator)
 {
@@ -106,32 +107,9 @@ bool Fraction::operator<=(const Fraction& other) const
     return !(*this > other);
 }
 
-
-Fraction pow(Fraction fraction, size_t exp)
-{
-    Fraction power(1ll, 1ll);
-
-    while (exp > 0)
-    {
-        if (exp & 1) power *= fraction;
-        fraction *= fraction;
-        exp >>= 1;
-    }
-
-    return power;
-}
-
 Fraction::operator double() const
 {
     return static_cast<double>(numerator_) / denominator_;
-}
-
-std::ostream& operator<<(std::ostream& output, const Fraction& fraction)
-{
-    if (fraction.numerator_ != 0 && fraction.denominator_ != 1) output << fraction.numerator_ << '/' << fraction.denominator_;
-    else output << std::fixed << fraction.numerator_;
-
-    return output;
 }
 
 
@@ -140,7 +118,6 @@ bool Fraction::IsInteger() const
 {
     return denominator_ == 1;
 }
-
 
 
 //private
@@ -158,4 +135,30 @@ void Fraction::Reduce()
         numerator_ /= gcd;
         denominator_ /= gcd;
     }
+}
+
+
+
+
+
+Fraction number::pow(Fraction fraction, size_t exp)
+{
+    Fraction power(1ll, 1ll);
+
+    while (exp > 0)
+    {
+        if (exp & 1) power *= fraction;
+        fraction *= fraction;
+        exp >>= 1;
+    }
+
+    return power;
+}
+
+std::ostream& number::operator<<(std::ostream& output, const Fraction& fraction)
+{
+    if (fraction.numerator_ != 0 && fraction.denominator_ != 1) output << fraction.numerator_ << '/' << fraction.denominator_;
+    else output << std::fixed << fraction.numerator_;
+
+    return output;
 }

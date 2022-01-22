@@ -1,49 +1,50 @@
 #pragma once
 #include <iostream>
 
-class Fraction
+namespace number
 {
-public:
-    using ValueType = long long;
+    class Fraction
+    {
+    public:
+        using ValueType = long long;
 
-private:
-    ValueType numerator_;
-    ValueType denominator_;
+    private:
+        ValueType numerator_;
+        ValueType denominator_;
 
-public:
+    public:
 
-    explicit Fraction(ValueType new_numerator, ValueType new_denominator);
+        explicit Fraction(ValueType new_numerator, ValueType new_denominator);
 
-    //arithmetic
-    Fraction& operator+= (const Fraction & addend);
-    Fraction& operator-= (const Fraction & subtrahend);
-    Fraction& operator*= (const Fraction & scalar);
-    Fraction& operator/=(const Fraction& divisor);
+        //arithmetic
+        Fraction& operator+= (const Fraction& addend);
+        Fraction& operator-= (const Fraction& subtrahend);
+        Fraction& operator*= (const Fraction& scalar);
+        Fraction& operator/=(const Fraction& divisor);
 
-    Fraction operator+(const Fraction& addend) const;
-    Fraction operator-(const Fraction& difference) const;
-    Fraction operator*(const Fraction& scalar) const;
-    Fraction operator/(const Fraction& divisor) const;
+        Fraction operator+(const Fraction& addend) const;
+        Fraction operator-(const Fraction& difference) const;
+        Fraction operator*(const Fraction& scalar) const;
+        Fraction operator/(const Fraction& divisor) const;
 
-    bool operator==(const Fraction& other) const;
-    bool operator!=(const Fraction& other) const;
-    bool operator<(const Fraction& other) const;
-    bool operator>(const Fraction& other) const;
-    bool operator>=(const Fraction& other) const;
-    bool operator<=(const Fraction& other) const;
+        bool operator==(const Fraction& other) const;
+        bool operator!=(const Fraction& other) const;
+        bool operator<(const Fraction& other) const;
+        bool operator>(const Fraction& other) const;
+        bool operator>=(const Fraction& other) const;
+        bool operator<=(const Fraction& other) const;
+        explicit operator double() const;
 
-    explicit operator double() const;
+        bool IsInteger() const;
 
-    friend Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
-    friend std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
+    private:
+        void Reduce();
 
 
-//misc
-public:
-    bool IsInteger() const;
+        friend Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
+        friend std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
+    };
 
-//private
-private:
-    void Reduce();
-};
-
+    Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
+    std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
+}

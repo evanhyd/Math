@@ -2,7 +2,7 @@
 #include "debug.h"
 #include <algorithm>
 
-#define DEBUG_MODE true
+#define DEBUG_MODE false
 
 using namespace matrix;
 
@@ -76,7 +76,7 @@ bool Matrix::operator!=(const Matrix& other) const
 }
 Matrix& Matrix::operator+=(const Matrix& addend)
 {
-    if (!this->IsSameDim(addend)) throw std::domain_error("addend matrix has different dimension");
+    if (!this->IsSameDim(addend)) throw std::domain_error("error, addend matrix has invalid dimension");
     for (size_t x = 0; x < row_size_; ++x)
     {
         data_[x] += addend.data_[x];
@@ -86,7 +86,7 @@ Matrix& Matrix::operator+=(const Matrix& addend)
 }
 Matrix& Matrix::operator-=(const Matrix& subtrahend)
 {
-    if (!this->IsSameDim(subtrahend)) throw std::domain_error("subtrahend matrix has different dimension");
+    if (!this->IsSameDim(subtrahend)) throw std::domain_error("error, subtrahend matrix has invalid dimension");
     for (size_t x = 0; x < row_size_; ++x)
     {
         data_[x] -= subtrahend.data_[x];
@@ -105,6 +105,26 @@ Matrix Matrix::operator-(const Matrix& subtrahend) const
     Matrix difference(*this);
     difference -= subtrahend;
     return difference;
+}
+Matrix Matrix::operator*(const Matrix& other) const
+{
+    //ij * jy = iy
+    if (column_size_ != other.row_size_) throw std::domain_error("error, matrix multiplication operand has invalid dimension");
+
+    Matrix product(row_size_, other.column_size_, 0.0);
+
+    for (int x = 0; x < product.row_size_; ++x)
+    {
+        for (int y = 0; y < product.column_size_; ++y)
+        {
+            for (int i = 0; i < column_size_; ++i)
+            {
+                product.data_[x][y] += data_[x][i] * other.data_[i][y];
+            }
+        }
+    }
+
+    return product;
 }
 
 Vector& Matrix::operator[](size_t i)
@@ -130,6 +150,32 @@ bool Matrix::IsZero() const
 
     return true;
 }
+bool Matrix::IsSquare() const
+{
+    return row_size_ == column_size_;
+}
+bool Matrix::IsIdentity() const
+{
+    if (!this->IsSquare()) return false;
+
+    for (size_t x = 0; x < row_size_; ++x)
+    {
+        for (size_t y = 0; y < column_size_; ++y)
+        {
+            if (x == y && abs(data_[x][y] - 1.0) > kEpsilon) return false;
+            else if (x != y && abs(data_[x][y]) > kEpsilon) return false;
+        }
+    }
+
+    return true;
+}
+bool Matrix::IsSameDim(const Matrix& other) const
+{
+    return row_size_ == other.row_size_ && column_size_ == other.column_size_;
+}
+
+
+
 void Matrix::SetZero()
 {
     for (size_t x = 0; x < row_size_; ++x)
@@ -137,39 +183,21 @@ void Matrix::SetZero()
         data_[x].SetZero();
     }
 }
-
-bool Matrix::IsStandard() const
+void Matrix::SetIdentity()
 {
-    if (row_size_ != column_size_) return false;
-
-    for (size_t x = 0; x < row_size_; ++x)
+    if (!this->IsSquare()) throw std::domain_error("error, operand is not a square matrix");
+    
+    for (size_t i = 0; i < row_size_; ++i)
     {
-        for (size_t y = 0; y < column_size_; ++y)
+        for (size_t j = 0; j < column_size_; ++j)
         {
-            if (x == y && data_[x][y] != 1.0) return false;
-            else if (x != y && data_[x][y] != 0.0) return false;
+            if (i == j) data_[i][j] = 1.0;
+            else data_[i][j] = 0.0;
         }
     }
-
-    return true;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-bool Matrix::IsSameDim(const Matrix& other) const
-{
-    return row_size_ == other.row_size_ && column_size_ == other.column_size_;
-}
 
 
 std::ostream& matrix::operator<<(std::ostream& output, const Matrix& matrix)
@@ -190,4 +218,18 @@ void matrix::swap(Matrix& m1, Matrix& m2)
     swap(m1.row_size_, m2.row_size_);
     swap(m1.column_size_, m2.column_size_);
     swap(m1.data_, m2.data_);
+}
+Matrix matrix::pow(Matrix matrix, size_t exp)
+{
+    Matrix power(matrix.RowDim(), matrix.ColumnDim());
+    power.SetIdentity();
+
+    while (exp > 0)
+    {
+        if (exp & 1) power = power * matrix;
+        matrix = matrix * matrix;
+        exp >>= 1;
+    }
+
+    return power;
 }

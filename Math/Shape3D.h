@@ -1,5 +1,4 @@
 #pragma once
-#include "Fraction.h"
 
 namespace geometry
 {
@@ -7,8 +6,8 @@ namespace geometry
     {
         Shape3D() = default;
 
-        virtual Fraction SurfaceArea() const = 0;
-        virtual Fraction Volume() const = 0;
+        virtual double SurfaceArea() const = 0;
+        virtual double Volume() const = 0;
     };
 }
 

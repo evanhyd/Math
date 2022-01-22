@@ -10,30 +10,48 @@
 
 using namespace matrix;
 
-void Test(matrix::Vector&& vec)
-{
-    std::cout << "change value\n";
-    vec[2] = 10;
-}
 
 int main()
 {
     DEBUG_MEMORY();
+    srand(time(NULL));
     
     while (true)
     {
         try
         {
             int x, y;
-            double z;
-            std::cin >> x >> y >> z; 
-            matrix::Matrix m1(x, y, z), m2{ {2, 1, 1} ,{1, 2, 1}, {1, 1, 2} };
+            std::cin >> x >> y;
 
-            std::cout << m1 << '\n';
-            std::cout << m2 << '\n';
-            std::cout << (m1 + m2) << '\n';
-            std::cout << m1.IsStandard() << '\n';
-            std::cout << (m2 - m1).IsStandard() << '\n';
+            
+            matrix::Matrix m1(x + 1, y, 0.0);
+            matrix::Matrix m2(y, x + 3, 0.0);
+
+
+            for (int i = 0; i < m1.RowDim(); ++i)
+            {
+                for (int j = 0; j < m1.ColumnDim(); ++j)
+                {
+                    m1[i][j] = rand() & 7;
+                }
+            }
+
+            for (int i = 0; i < m2.RowDim(); ++i)
+            {
+                for (int j = 0; j < m2.ColumnDim(); ++j)
+                {
+                    m2[i][j] = rand() & 7;
+                }
+            }
+
+            std::cout << "Before:\n";
+            std::cout << m1 << '\n' << m2 << '\n';
+
+            std::cout << "After:\n";
+            std::cout << (m1 * m2) << std::endl;
+
+            std::cout << "Power:\n";
+            std::cout << matrix::pow(m1, 5) << std::endl;
 
         }
         catch (const std::exception &error)
