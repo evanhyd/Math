@@ -77,9 +77,9 @@ bool Matrix::operator!=(const Matrix& other) const
 Matrix& Matrix::operator+=(const Matrix& addend)
 {
     if (!this->IsSameDim(addend)) throw std::domain_error("error, addend matrix has invalid dimension");
-    for (size_t x = 0; x < row_size_; ++x)
+    for (size_t i = 0; i < row_size_; ++i)
     {
-        data_[x] += addend.data_[x];
+        data_[i] += addend.data_[i];
     }
 
     return *this;
@@ -87,9 +87,9 @@ Matrix& Matrix::operator+=(const Matrix& addend)
 Matrix& Matrix::operator-=(const Matrix& subtrahend)
 {
     if (!this->IsSameDim(subtrahend)) throw std::domain_error("error, subtrahend matrix has invalid dimension");
-    for (size_t x = 0; x < row_size_; ++x)
+    for (size_t i = 0; i < row_size_; ++i)
     {
-        data_[x] -= subtrahend.data_[x];
+        data_[i] -= subtrahend.data_[i];
     }
 
     return *this;
@@ -113,11 +113,11 @@ Matrix Matrix::operator*(const Matrix& other) const
 
     Matrix product(row_size_, other.column_size_, 0.0);
 
-    for (int x = 0; x < product.row_size_; ++x)
+    for (size_t x = 0; x < product.row_size_; ++x)
     {
-        for (int y = 0; y < product.column_size_; ++y)
+        for (size_t y = 0; y < product.column_size_; ++y)
         {
-            for (int i = 0; i < column_size_; ++i)
+            for (size_t i = 0; i < column_size_; ++i)
             {
                 product.data_[x][y] += data_[x][i] * other.data_[i][y];
             }
@@ -131,7 +131,10 @@ Vector& Matrix::operator[](size_t i)
 {
     return data_[i];
 }
-
+const Vector& Matrix::operator[](size_t i) const
+{
+    return data_[i];
+}
 
 size_t Matrix::RowDim() const
 {
@@ -143,9 +146,9 @@ size_t Matrix::ColumnDim() const
 }
 bool Matrix::IsZero() const
 {
-    for (size_t x = 0; x < row_size_; ++x)
+    for (size_t i = 0; i < row_size_; ++i)
     {
-        if (!data_[x].IsZero()) return false;
+        if (!data_[i].IsZero()) return false;
     }
 
     return true;
@@ -158,12 +161,12 @@ bool Matrix::IsIdentity() const
 {
     if (!this->IsSquare()) return false;
 
-    for (size_t x = 0; x < row_size_; ++x)
+    for (size_t i = 0; i < row_size_; ++i)
     {
-        for (size_t y = 0; y < column_size_; ++y)
+        for (size_t j = 0; j < column_size_; ++j)
         {
-            if (x == y && abs(data_[x][y] - 1.0) > kEpsilon) return false;
-            else if (x != y && abs(data_[x][y]) > kEpsilon) return false;
+            if (i == j && abs(data_[i][j] - 1.0) > kEpsilon) return false;
+            else if (i != j && abs(data_[i][j]) > kEpsilon) return false;
         }
     }
 
@@ -178,9 +181,9 @@ bool Matrix::IsSameDim(const Matrix& other) const
 
 void Matrix::SetZero()
 {
-    for (size_t x = 0; x < row_size_; ++x)
+    for (size_t i = 0; i < row_size_; ++i)
     {
-        data_[x].SetZero();
+        data_[i].SetZero();
     }
 }
 void Matrix::SetIdentity()
@@ -200,10 +203,7 @@ Matrix& Matrix::Scale(double scalar)
 {
     for (size_t i = 0; i < row_size_; ++i)
     {
-        for (size_t j = 0; j < column_size_; ++j)
-        {
-            data_[i][j] *= scalar;
-        }
+        data_[i] *= scalar;
     }
 
     return *this;
@@ -221,6 +221,51 @@ Matrix Matrix::Transpose() const
     }
 
     return transposed;
+}
+
+
+
+//row operations
+Matrix& Matrix::RowSwap(size_t r1, size_t r2)
+{
+    swap(data_[r1], data_[r2]);
+    return *this;
+}
+Matrix& Matrix::RowMultiply(size_t r1, double scalar)
+{
+    data_[r1] *= scalar;
+    return *this;
+}
+Matrix& Matrix::RowAdd(size_t srce_row, double scalar, size_t dest_row)
+{
+    data_[dest_row] += data_[srce_row] * scalar;
+    return *this;
+}
+
+
+//column operations
+Matrix& Matrix::ColumnSwap(size_t c1, size_t c2)
+{
+    for (size_t i = 0; i < row_size_; ++i)
+    {
+        std::swap(data_[i][c1], data_[i][c2]);
+    }
+}
+Matrix& Matrix::ColumnMultiply(size_t c1, double scalar)
+{
+    for (size_t i = 0; i < row_size_; ++i)
+    {
+        data_[i][c1] *= scalar;
+    }
+    return *this;
+}
+Matrix& Matrix::ColumnAdd(size_t srce_column, double scalar, size_t dest_column)
+{
+    for (size_t i = 0; i < row_size_; ++i)
+    {
+        data_[i][dest_column] += data_[i][srce_column] * scalar;
+    }
+    return *this;
 }
 
 

@@ -31,6 +31,7 @@ namespace matrix
         Vector operator*(double scalar) const;
 
         double& operator[](size_t i);
+        double operator[](size_t i) const;
 
         size_t Dim() const;
         bool IsZero() const;

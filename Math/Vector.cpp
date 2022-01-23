@@ -122,7 +122,10 @@ double& Vector::operator[](size_t i)
 {
     return data_[i];
 }
-
+double Vector::operator[](size_t i) const
+{
+    return data_[i];
+}
 
 size_t Vector::Dim() const
 {

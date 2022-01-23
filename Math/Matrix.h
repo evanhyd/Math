@@ -30,6 +30,7 @@ namespace matrix
         Matrix operator*(const Matrix& other) const;
 
         Vector& operator[](size_t i);
+        const Vector& operator[](size_t i) const;
 
 
         size_t RowDim() const;
@@ -41,8 +42,21 @@ namespace matrix
 
         void SetZero();
         void SetIdentity();
+        
         Matrix& Scale(double scalar);
         Matrix Transpose() const;
+
+        //row operations
+        Matrix& RowSwap(size_t r1, size_t r2);
+        Matrix& RowMultiply(size_t r1, double scalar);
+        Matrix& RowAdd(size_t srce_row, double scalar, size_t dest_row);
+
+        //column operations
+        Matrix& ColumnSwap(size_t c1, size_t c2);
+        Matrix& ColumnMultiply(size_t c1, double scalar);
+        Matrix& ColumnAdd(size_t srce_column, double scalar, size_t dest_column);
+
+
 
     private:
 
