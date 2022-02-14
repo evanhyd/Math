@@ -8,14 +8,6 @@ Polar2D::Polar2D(double new_magnitude, double new_angle) : magnitude_(new_magnit
     //empty
 }
 
-bool Polar2D::operator==(const Polar2D& other) const
-{
-    return magnitude_ == other.magnitude_ && angle_ == other.angle_;
-}
-bool Polar2D::operator!=(const Polar2D& other) const
-{
-    return  !(*this == other);
-}
      
 Polar2D& Polar2D::operator+=(const Polar2D& addend)
 {
@@ -48,44 +40,24 @@ Polar2D& Polar2D::operator/=(double divisor)
     return *this;
 }
 
-Polar2D Polar2D::operator+(const Polar2D& addend) const
-{
-    Polar2D sum = *this;
-    return sum += addend;
-}
-Polar2D Polar2D::operator-(const Polar2D& subtrahend) const
-{
-    Polar2D difference = *this;
-    return difference -= subtrahend;
-}
-Polar2D Polar2D::operator*(double scalar) const
-{
-    Polar2D product = *this;
-    return product *= scalar;
-}
-Polar2D Polar2D::operator/(double divisor) const
-{
-    Polar2D quotient = *this;
-    return quotient /= divisor;
-}
 
-
-double Polar2D::GetMagnitude() const
+double& Polar2D::Magnitude()
 {
     return magnitude_;
 }
-double Polar2D::GetAngle() const
+double Polar2D::Magnitude() const
+{
+    return magnitude_;
+}
+double& Polar2D::Angle()
 {
     return angle_;
 }
-void Polar2D::SetMagnitude(double new_magnitude)
+double Polar2D::Angle() const
 {
-    magnitude_ = new_magnitude;
+    return angle_;
 }
-void Polar2D::SetAngle(double new_angle)
-{
-    angle_ = new_angle;
-}
+
 
 Polar2D Polar2D::UnitPolar() const
 {
@@ -95,3 +67,44 @@ bool Polar2D::IsZero() const
 {
     return magnitude_ == 0.0;
 }
+
+
+
+
+
+
+Polar2D geometry::operator+ (Polar2D lhs, const Polar2D& addend)
+{
+    lhs += addend;
+    return lhs;
+}
+
+Polar2D geometry::operator- (Polar2D lhs, const Polar2D& subtrahend)
+{
+    lhs -= subtrahend;
+    return lhs;
+}
+
+Polar2D geometry::operator* (Polar2D lhs, double scalar)
+{
+    lhs *= scalar;
+    return lhs;
+}
+
+Polar2D geometry::operator/(Polar2D lhs, double divisor)
+{
+    lhs /= divisor;
+    return lhs;
+}
+
+bool geometry::operator==(const Polar2D& lhs, const Polar2D& rhs)
+{
+    return lhs.magnitude_ * cos(lhs.angle_) == rhs.magnitude_ * cos(rhs.angle_) &&
+           lhs.magnitude_ * sin(lhs.angle_) == rhs.magnitude_ * cos(rhs.angle_);
+}
+
+bool geometry::operator!=(const Polar2D& lhs, const Polar2D& rhs)
+{
+    return !operator==(lhs, rhs);
+}
+

@@ -8,15 +8,6 @@ Cartesian2D::Cartesian2D(double new_x, double new_y) : x_(new_x), y_(new_y)
     //empty
 }
 
-bool Cartesian2D::operator==(const Cartesian2D& other) const
-{
-    return x_ == other.x_ && y_ == other.y_;
-}
-bool Cartesian2D::operator!=(const Cartesian2D& other) const
-{
-    return !(*this == other);
-}
-
 Cartesian2D& Cartesian2D::operator+=(const Cartesian2D& addend)
 {
     x_ += addend.x_;
@@ -42,46 +33,26 @@ Cartesian2D& Cartesian2D::operator/=(double divisor)
     return *this;
 }
 
-Cartesian2D Cartesian2D::operator+(const Cartesian2D& addend) const
-{
-    Cartesian2D sum = *this;
-    return sum += addend;
-}
-Cartesian2D Cartesian2D::operator-(const Cartesian2D& subtrahend) const
-{
-    Cartesian2D difference = *this;
-    return difference -= subtrahend;
-}
-Cartesian2D Cartesian2D::operator*(double scalar) const
-{
-    Cartesian2D product = *this;
-    return product *= scalar;
-}
-Cartesian2D Cartesian2D::operator/(double divisor) const
-{
-    Cartesian2D quotient = *this;
-    return quotient /= divisor;
-}
 
-
-
-double Cartesian2D::GetX() const
+double Cartesian2D::X() const
 {
     return x_;
 }
-double Cartesian2D::GetY() const
+
+double& Cartesian2D::X()
+{
+    return x_;
+}
+
+double Cartesian2D::Y() const
 {
     return y_;
 }
-void Cartesian2D::SetX(double new_x)
-{
-    x_ = new_x;
-}
-void Cartesian2D::SetY(double new_y)
-{
-    y_ = new_y;
-}
 
+double& Cartesian2D::Y()
+{
+    return y_;
+}
 
 
 
@@ -104,4 +75,39 @@ void Cartesian2D::SetZero()
 {
     x_ = 0.0;
     y_ = 0.0;
+}
+
+
+Cartesian2D geometry::operator+(Cartesian2D lhs, const Cartesian2D& addend)
+{
+    lhs += addend;
+    return lhs;
+}
+
+Cartesian2D geometry::operator-(Cartesian2D lhs, const Cartesian2D& subtrahend)
+{
+    lhs -= subtrahend;
+    return lhs;
+}
+
+Cartesian2D geometry::operator*(Cartesian2D lhs, double scalar)
+{
+    lhs *= scalar;
+    return lhs;
+}
+
+Cartesian2D geometry::operator/(Cartesian2D lhs, double divisor)
+{
+    lhs /= divisor;
+    return lhs;
+}
+
+bool geometry::operator==(const Cartesian2D& lhs, const Cartesian2D& rhs)
+{
+    return lhs.x_ == rhs.x_ && lhs.y_ == rhs.y_;
+}
+
+bool geometry::operator!=(const Cartesian2D& lhs, const Cartesian2D& rhs)
+{
+    return !operator==(lhs, rhs);
 }

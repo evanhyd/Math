@@ -11,28 +11,34 @@ namespace geometry
 
         explicit Polar2D(double new_magnitude, double new_angle);
 
-        bool operator==(const Polar2D& other) const;
-        bool operator!=(const Polar2D& other) const;
-
         Polar2D& operator+=(const Polar2D& addend);
         Polar2D& operator-=(const Polar2D& subtrahend);
         Polar2D& operator*=(double scalar);
         Polar2D& operator/=(double divisor);
 
-        Polar2D operator+ (const Polar2D& addend) const;
-        Polar2D operator- (const Polar2D& subtrahend) const;
-        Polar2D operator* (double scalar) const;
-        Polar2D operator/(double divisor) const;
-
-
-        double GetMagnitude() const;
-        double GetAngle() const;
-        void SetMagnitude(double new_magnitude);
-        void SetAngle(double new_angle);
+        double& Magnitude();
+        double Magnitude() const;
+        double& Angle();
+        double Angle() const;
 
         Polar2D UnitPolar() const;
         bool IsZero() const;
+
+
+        friend Polar2D operator+ (Polar2D lhs, const Polar2D& addend);
+        friend Polar2D operator- (Polar2D lhs, const Polar2D& subtrahend);
+        friend Polar2D operator* (Polar2D lhs, double scalar);
+        friend Polar2D operator/(Polar2D lhs, double divisor);
+        friend bool operator==(const Polar2D& lhs, const Polar2D& rhs);
+        friend bool operator!=(const Polar2D& lhs, const Polar2D& rhs);
     };
+
+    Polar2D operator+ (Polar2D lhs, const Polar2D& addend);
+    Polar2D operator- (Polar2D lhs, const Polar2D& subtrahend);
+    Polar2D operator* (Polar2D lhs, double scalar);
+    Polar2D operator/(Polar2D lhs, double divisor);
+    bool operator==(const Polar2D& lhs, const Polar2D& rhs);
+    bool operator!=(const Polar2D& lhs, const Polar2D& rhs);
 }
 
 

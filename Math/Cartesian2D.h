@@ -11,29 +11,37 @@ namespace geometry
 
         explicit Cartesian2D(double new_x, double new_y);
 
-        bool operator==(const Cartesian2D& other) const;
-        bool operator!=(const Cartesian2D& other) const;
-
         Cartesian2D& operator+=(const Cartesian2D& addend);
         Cartesian2D& operator-=(const Cartesian2D& subtrahend);
         Cartesian2D& operator*=(double scalar);
         Cartesian2D& operator/=(double divisor);
 
-        Cartesian2D operator+(const Cartesian2D& addend) const;
-        Cartesian2D operator-(const Cartesian2D& subtrahend) const;
-        Cartesian2D operator*(double scalar) const;
-        Cartesian2D operator/(double divisor) const;
 
-        double GetX() const;
-        double GetY() const;
-        void SetX(double new_x);
-        void SetY(double new_y);
+        double X() const;
+        double& X();
+        double Y() const;
+        double& Y();
 
         double Magnitude() const;
         Cartesian2D UnitVector() const;
         bool IsZero() const;
         void SetZero();
+
+
+        friend Cartesian2D operator+(Cartesian2D lhs, const Cartesian2D& addend);
+        friend Cartesian2D operator-(Cartesian2D lhs, const Cartesian2D& subtrahend);
+        friend Cartesian2D operator*(Cartesian2D lhs, double scalar);
+        friend Cartesian2D operator/(Cartesian2D lhs, double divisor);
+        friend bool operator==(const Cartesian2D& lhs, const Cartesian2D& rhs);
+        friend bool operator!=(const Cartesian2D& lhs, const Cartesian2D& rhs);
     };
+
+    Cartesian2D operator+(Cartesian2D lhs, const Cartesian2D& addend);
+    Cartesian2D operator-(Cartesian2D lhs, const Cartesian2D& subtrahend);
+    Cartesian2D operator*(Cartesian2D lhs, double scalar);
+    Cartesian2D operator/(Cartesian2D lhs, double divisor);
+    bool operator==(const Cartesian2D& lhs, const Cartesian2D& rhs);
+    bool operator!=(const Cartesian2D& lhs, const Cartesian2D& rhs);
 }
 
 
