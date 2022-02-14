@@ -21,30 +21,39 @@ namespace number
         Fraction& operator-= (const Fraction& subtrahend);
         Fraction& operator*= (const Fraction& scalar);
         Fraction& operator/=(const Fraction& divisor);
-
-        Fraction operator+(const Fraction& addend) const;
-        Fraction operator-(const Fraction& difference) const;
-        Fraction operator*(const Fraction& scalar) const;
-        Fraction operator/(const Fraction& divisor) const;
-
-        bool operator==(const Fraction& other) const;
-        bool operator!=(const Fraction& other) const;
-        bool operator<(const Fraction& other) const;
-        bool operator>(const Fraction& other) const;
-        bool operator>=(const Fraction& other) const;
-        bool operator<=(const Fraction& other) const;
         explicit operator double() const;
+
 
         bool IsInteger() const;
 
     private:
         void Reduce();
 
-
+        friend Fraction operator+(Fraction lhs, const Fraction& addend);
+        friend Fraction operator-(Fraction lhs, const Fraction& difference);
+        friend Fraction operator*(Fraction lhs, const Fraction& scalar);
+        friend Fraction operator/(Fraction lhs, const Fraction& divisor);
+        friend bool operator==(const Fraction& lhs, const Fraction& rhs);
+        friend bool operator!=(const Fraction& lhs, const Fraction& rhs);
+        friend bool operator<(const Fraction& lhs, const Fraction& rhs);
+        friend bool operator>(const Fraction& lhs, const Fraction& rhs);
+        friend bool operator>=(const Fraction& lhs, const Fraction& rhs);
+        friend bool operator<=(const Fraction& lhs, const Fraction& rhs);
         friend Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
         friend std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
     };
 
-    Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
+    Fraction operator+(Fraction lhs, const Fraction& addend);
+    Fraction operator-(Fraction lhs, const Fraction& difference);
+    Fraction operator*(Fraction lhs, const Fraction& scalar);
+    Fraction operator/(Fraction lhs, const Fraction& divisor);
+    bool operator==(const Fraction& lhs, const Fraction& rhs);
+    bool operator!=(const Fraction& lhs, const Fraction& rhs);
+    bool operator<(const Fraction& lhs, const Fraction& rhs);
+    bool operator>(const Fraction& lhs, const Fraction& rhs);
+    bool operator>=(const Fraction& lhs, const Fraction& rhs);
+    bool operator<=(const Fraction& lhs, const Fraction& rhs);
+
+    Fraction pow(Fraction fraction, size_t exp);
     std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
 }

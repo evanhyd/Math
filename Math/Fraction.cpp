@@ -13,10 +13,9 @@ Fraction::Fraction(ValueType new_numerator, ValueType new_denominator) : numerat
 Fraction& Fraction::operator+=(const Fraction& addend)
 {
     ValueType lcd = std::lcm(denominator_, addend.denominator_);
-    ValueType scalar1 = lcd / denominator_;
-    ValueType scalar2 = lcd / addend.denominator_;
 
-    numerator_ = numerator_ * scalar1 + addend.numerator_ * scalar2;
+    //calculate the numerator with the lowest common denominator base
+    numerator_ = numerator_ * (lcd / denominator_) + addend.numerator_ * (lcd / addend.denominator_);
     denominator_ = lcd;
 
     this->Reduce();
@@ -53,60 +52,6 @@ Fraction& Fraction::operator/=(const Fraction& divisor)
     return *this;
 }
 
-Fraction Fraction::operator+(const Fraction& addend) const
-{
-    Fraction sum = *this;
-    return sum += addend;
-}
-Fraction Fraction::operator-(const Fraction& subtrahend) const
-{
-    Fraction difference = *this;
-    return difference -= subtrahend;
-}
-Fraction Fraction::operator*(const Fraction& scalar) const
-{
-    Fraction product = *this;
-    return product *= scalar;
-}
-Fraction Fraction::operator/(const Fraction& divisor) const
-{
-    Fraction quotient = *this;
-    return quotient /= divisor;
-}
-
-bool Fraction::operator==(const Fraction& other) const
-{
-    return numerator_ == other.numerator_ && denominator_ == other.denominator_;
-}
-bool Fraction::operator!=(const Fraction& other) const
-{
-    return !(*this == other);
-}
-bool Fraction::operator<(const Fraction& other) const
-{
-    ValueType lcm = std::lcm(denominator_, other.denominator_);
-    ValueType scalar1 = lcm / denominator_;
-    ValueType scalar2 = lcm / other.denominator_;
-
-    return numerator_ * scalar1 < other.numerator_* scalar2;
-}
-bool Fraction::operator>(const Fraction& other) const
-{
-    ValueType lcm = std::lcm(denominator_, other.denominator_);
-    ValueType scalar1 = lcm / denominator_;
-    ValueType scalar2 = lcm / other.denominator_;
-
-    return numerator_ * scalar1 > other.numerator_* scalar2;
-}
-bool Fraction::operator>=(const Fraction& other) const
-{
-    return !(*this < other);
-}
-bool Fraction::operator<=(const Fraction& other) const
-{
-    return !(*this > other);
-}
-
 Fraction::operator double() const
 {
     return static_cast<double>(numerator_) / denominator_;
@@ -135,8 +80,62 @@ void Fraction::Reduce()
         numerator_ /= gcd;
         denominator_ /= gcd;
     }
+    else
+    {
+        denominator_ = 1;
+    }
 }
 
+
+
+
+
+
+
+Fraction number::operator+(Fraction lhs, const Fraction& addend)
+{
+    lhs += addend;
+    return lhs;
+}
+Fraction number::operator-(Fraction lhs, const Fraction& difference)
+{
+    lhs -= difference;
+    return lhs;
+}
+Fraction number::operator*(Fraction lhs, const Fraction& scalar)
+{
+    lhs *= scalar;
+    return lhs;
+}
+Fraction number::operator/(Fraction lhs, const Fraction& divisor)
+{
+    lhs /= divisor;
+    return lhs;
+}
+bool number::operator==(const Fraction& lhs, const Fraction& rhs)
+{
+    return lhs.numerator_ * rhs.denominator_ == rhs.numerator_ * lhs.denominator_;
+}
+bool number::operator!=(const Fraction& lhs, const Fraction& rhs)
+{
+    return !operator==(lhs, rhs);
+}
+bool number::operator<(const Fraction& lhs, const Fraction& rhs)
+{
+    return lhs.numerator_* rhs.denominator_ < rhs.numerator_ * lhs.denominator_;
+}
+bool number::operator>(const Fraction& lhs, const Fraction& rhs)
+{
+    return operator<(rhs, lhs);
+}
+bool number::operator>=(const Fraction& lhs, const Fraction& rhs)
+{
+    return !operator<(lhs, rhs);
+}
+bool number::operator<=(const Fraction& lhs, const Fraction& rhs)
+{
+    return !operator>(lhs, rhs);
+}
 
 
 

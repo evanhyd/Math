@@ -250,6 +250,7 @@ Matrix& Matrix::ColumnSwap(size_t c1, size_t c2)
     {
         std::swap(data_[i][c1], data_[i][c2]);
     }
+    return *this;
 }
 Matrix& Matrix::ColumnMultiply(size_t c1, double scalar)
 {

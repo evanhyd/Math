@@ -22,10 +22,8 @@ int main()
         {
             int x, y;
             std::cin >> x >> y;
-
             
-            matrix::Matrix m1(x + 1, y, 0.0);
-            matrix::Matrix m2(y, x + 3, 0.0);
+            matrix::Matrix m1(x, y);
 
 
             for (int i = 0; i < m1.RowDim(); ++i)
@@ -36,25 +34,26 @@ int main()
                 }
             }
 
-            for (int i = 0; i < m2.RowDim(); ++i)
-            {
-                for (int j = 0; j < m2.ColumnDim(); ++j)
-                {
-                    m2[i][j] = rand() & 7;
-                }
-            }
-
             std::cout << "Before:\n";
-            std::cout << m1 << '\n' << m2 << '\n';
+            std::cout << m1 << '\n';
 
+            m1.RowSwap(1, 3);
             std::cout << "After:\n";
-            std::cout << (m1 * m2) << std::endl;
+            std::cout << (m1) << '\n';
 
-            std::cout << "Power:\n";
-            std::cout << matrix::pow(m1, 5) << '\n';
 
-            std::cout << "Transpoed:\n";
-            std::cout << m2.Transpose() << '\n';
+            m1.ColumnSwap(1, 3);
+            std::cout << "After:\n";
+            std::cout << (m1) << '\n';
+
+            m1.RowAdd(2, 10, 0);
+            std::cout << "After:\n";
+            std::cout << (m1) << '\n';
+
+
+            m1.ColumnAdd(2, 10, 0);
+            std::cout << "After:\n";
+            std::cout << (m1) << '\n';
 
         }
         catch (const std::exception &error)
