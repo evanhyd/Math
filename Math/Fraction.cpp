@@ -140,9 +140,14 @@ bool number::operator<=(const Fraction& lhs, const Fraction& rhs)
 
 
 
-Fraction number::pow(Fraction fraction, size_t exp)
+Fraction number::pow(Fraction fraction, int exp)
 {
     Fraction power(1ll, 1ll);
+    if (exp < 0)
+    {
+        fraction = Fraction(1ll, 1ll) / fraction;
+        exp = -exp;
+    }
 
     while (exp > 0)
     {

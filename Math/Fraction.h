@@ -39,7 +39,7 @@ namespace number
         friend bool operator>(const Fraction& lhs, const Fraction& rhs);
         friend bool operator>=(const Fraction& lhs, const Fraction& rhs);
         friend bool operator<=(const Fraction& lhs, const Fraction& rhs);
-        friend Fraction pow(Fraction fraction, size_t exp); //intended to override std::pow
+        friend Fraction pow(Fraction fraction, int exp);
         friend std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
     };
 
@@ -54,6 +54,6 @@ namespace number
     bool operator>=(const Fraction& lhs, const Fraction& rhs);
     bool operator<=(const Fraction& lhs, const Fraction& rhs);
 
-    Fraction pow(Fraction fraction, size_t exp);
+    Fraction pow(Fraction fraction, int exp);
     std::ostream& operator<<(std::ostream& output, const Fraction& fraction);
 }
