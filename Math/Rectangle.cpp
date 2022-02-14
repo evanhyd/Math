@@ -37,5 +37,5 @@ double Rectangle::Area() const
 bool Rectangle::IsPointInside(const Cartesian2D& point) const
 {
     Cartesian2D relative = point - pos_;
-    return 0.0 <= relative.GetX() && relative.GetX() <= width_ && 0.0 <= relative.GetY() && relative.GetY() <= length_;
+    return 0.0 <= relative.X() && relative.X() <= width_ && 0.0 <= relative.Y() && relative.Y() <= length_;
 }

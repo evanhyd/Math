@@ -10,68 +10,49 @@ Vector::Vector() :
     size_(0), data_(nullptr)
 {
     DEBUG_LOG("vec default constructor", DEBUG_MODE);
-    //empty
 }
+
 Vector::Vector(std::initializer_list<double> lst) : 
     size_(lst.size()), data_(new double[lst.size()])
 {
     DEBUG_LOG("vec initializer constructor", DEBUG_MODE);
     std::move(lst.begin(), lst.end(), data_);
 }
+
 Vector::Vector(size_t new_dimension, double new_value) : 
     size_(new_dimension), data_(new double[new_dimension])
 {
     DEBUG_LOG("vec direct constructor", DEBUG_MODE);
     std::fill(data_, data_ + size_, new_value);
 }
-Vector::Vector(const Vector& other) :
-    size_(other.size_), data_(new double[other.size_])
+
+Vector::Vector(const Vector& rhs) :
+    size_(rhs.size_), data_(new double[rhs.size_])
 {
     DEBUG_LOG("vec copy constructor", DEBUG_MODE);
-    std::copy(other.data_, other.data_ + size_, data_);
+    std::copy(rhs.data_, rhs.data_ + size_, data_);
 }
-Vector::Vector(Vector&& other) noexcept : 
+
+Vector::Vector(Vector&& rhs) noexcept : 
     Vector()
 {
     DEBUG_LOG("vec move constructor", DEBUG_MODE);
-    swap(*this, other);
+    swap(*this, rhs);
 }
+
 Vector::~Vector()
 {
     DEBUG_LOG("vec destructor", DEBUG_MODE);
     delete[] data_;
 }
 
-Vector& Vector::operator=(const Vector& other)
+Vector& Vector::operator=(Vector rhs)
 {
-    DEBUG_LOG("vec copy assignmente", DEBUG_MODE);
-    Vector temp(other);
-    matrix::swap(*this, temp);
-    return *this;
-}
-Vector& Vector::operator=(Vector&& other) noexcept
-{
-    DEBUG_LOG("vec move assignment", DEBUG_MODE);
-    Vector temp(std::move(other));
-    matrix::swap(*this, temp);
+    DEBUG_LOG("vec copy/move assignment", DEBUG_MODE);
+    matrix::swap(*this, rhs);
     return *this;
 }
 
-
-bool Vector::operator==(const Vector& other) const
-{
-    if (size_ != other.size_) return false;
-
-    for (size_t i = 0; i < size_; ++i)
-    {
-        if (data_[i] != other.data_[i]) return false;
-    }   
-    return true;
-}
-bool Vector::operator!=(const Vector& other) const
-{
-    return !(*this == other);
-}
 
 Vector& Vector::operator+=(const Vector& addend)
 {
@@ -97,25 +78,6 @@ Vector& Vector::operator*=(double scalar)
 {
     std::for_each(data_, data_ + size_, [scalar](double& num) { num *= scalar; });
     return *this;
-}
-
-Vector Vector::operator+(const Vector& addend) const
-{
-    Vector sum(*this);
-    sum += addend;
-    return sum;
-}
-Vector Vector::operator-(const Vector& subtrahend) const
-{
-    Vector difference(*this);
-    difference -= subtrahend;
-    return difference;
-}
-Vector Vector::operator*(double scalar) const
-{
-    Vector scalar_product(*this);
-    scalar_product *= scalar;
-    return scalar_product;
 }
 
 double& Vector::operator[](size_t i)
@@ -147,23 +109,23 @@ void Vector::SetZero()
     }
 }
 
-double Vector::Dot(const Vector& other) const
+double Vector::Dot(const Vector& rhs) const
 {
-    if (!this->IsSameDim(other)) throw std::domain_error("vector dot product has different dimension");
+    if (!this->IsSameDim(rhs)) throw std::domain_error("vector dot product has different dimension");
 
     double dot_product = 0.0;
     for (size_t i = 0; i < size_; ++i)
     {
-        dot_product += data_[i] * other.data_[i];
+        dot_product += data_[i] * rhs.data_[i];
     }
     return dot_product;
 }
 
 
 
-bool Vector::IsSameDim(const Vector& other) const
+bool Vector::IsSameDim(const Vector& rhs) const
 {
-    return size_ == other.size_;
+    return size_ == rhs.size_;
 }
 
 
@@ -175,6 +137,39 @@ bool Vector::IsSameDim(const Vector& other) const
 
 
 
+Vector matrix::operator+(Vector lhs, const Vector& addend)
+{
+    lhs += addend;
+    return lhs;
+}
+
+Vector matrix::operator-(Vector lhs, const Vector& subtrahend)
+{
+    lhs -= subtrahend;
+    return lhs;
+}
+
+Vector matrix::operator*(Vector lhs, double scalar)
+{
+    lhs *= scalar;
+    return lhs;
+}
+
+bool matrix::operator==(const Vector& lhs, const Vector& rhs)
+{
+    if (lhs.size_ != rhs.size_) return false;
+
+    for (size_t i = 0; i < lhs.size_; ++i)
+    {
+        if (lhs.data_[i] != rhs.data_[i]) return false;
+    }
+    return true;
+}
+
+bool matrix::operator!=(const Vector& lhs, const Vector& rhs)
+{
+    return !operator==(lhs, rhs);
+}
 
 
 
@@ -184,9 +179,9 @@ std::ostream& matrix::operator<<(std::ostream& output, const Vector& vec)
     return output;
 }
 
-void matrix::swap(Vector& v1, Vector& v2)
+void matrix::swap(Vector& lhs, Vector& rhs)
 {
     using std::swap;
-    swap(v1.size_, v2.size_);
-    swap(v1.data_, v2.data_);
+    swap(lhs.size_, rhs.size_);
+    swap(lhs.data_, rhs.data_);
 }

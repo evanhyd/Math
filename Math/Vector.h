@@ -5,7 +5,6 @@ namespace matrix
 {
     class Vector
     {
-        //yes I know std::array will work
         size_t size_;
         double* data_;
 
@@ -13,22 +12,15 @@ namespace matrix
         Vector();
         Vector(std::initializer_list<double> lst);
         explicit Vector(size_t new_dimension, double new_value = 0.0);
-        Vector(const Vector& other);
-        Vector(Vector&& other) noexcept;
+        Vector(const Vector& rhs);
+        Vector(Vector&& rhs) noexcept;
         ~Vector();
 
-        Vector& operator=(const Vector& other);
-        Vector& operator=(Vector&& other) noexcept;
-
-        bool operator==(const Vector& other) const;
-        bool operator!=(const Vector& other) const;
+        Vector& operator=(Vector rhs);
 
         Vector& operator+=(const Vector& addend);
         Vector& operator-=(const Vector& subtrahend);
         Vector& operator*=(double scalar);
-        Vector operator+(const Vector& addend) const;
-        Vector operator-(const Vector& subtrahend) const;
-        Vector operator*(double scalar) const;
 
         double& operator[](size_t i);
         double operator[](size_t i) const;
@@ -42,12 +34,26 @@ namespace matrix
     private:
         bool IsSameDim(const Vector& other) const;
 
+
+        friend Vector operator+(Vector lhs, const Vector& addend);
+        friend Vector operator-(Vector lhs, const Vector& subtrahend);
+        friend Vector operator*(Vector lhs, double scalar);
+        friend bool operator==(const Vector& lhs, const Vector& rhs);
+        friend bool operator!=(const Vector& lhs, const Vector& rhs);
+
         friend std::ostream& operator<<(std::ostream& output, const Vector& vec);
         friend void swap(Vector& v1, Vector& v2);
     };
 
+
+    Vector operator+(Vector lhs, const Vector& addend);
+    Vector operator-(Vector lhs, const Vector& subtrahend);
+    Vector operator*(Vector lhs, double scalar);
+    bool operator==(const Vector& lhs, const Vector& rhs);
+    bool operator!=(const Vector& lhs, const Vector& rhs);
+
     std::ostream& operator<<(std::ostream& output, const Vector& vec);
-    void swap(Vector& v1, Vector& v2);
+    void swap(Vector& lhs, Vector& rhs);
     
 }
 
