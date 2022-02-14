@@ -14,20 +14,15 @@ namespace matrix
         Matrix();
         Matrix(std::initializer_list<Vector> lst);
         explicit Matrix(size_t new_row_size, size_t new_column_size, double new_value = 0.0);
-        Matrix(const Matrix& other);
-        Matrix(Matrix&& other) noexcept;
+        Matrix(const Matrix& rhs);
+        Matrix(Matrix&& rhs) noexcept;
         ~Matrix();
 
-        Matrix& operator=(const Matrix& other);
-        Matrix& operator=(Matrix&& other) noexcept;
+        Matrix& operator=(Matrix rhs);
 
-        bool operator==(const Matrix& other) const;
-        bool operator!=(const Matrix& other) const;
+        
         Matrix& operator+=(const Matrix& addend);
         Matrix& operator-=(const Matrix& subtrahend);
-        Matrix operator+(const Matrix& addend) const;
-        Matrix operator-(const Matrix& subtrahend) const;
-        Matrix operator*(const Matrix& other) const;
 
         Vector& operator[](size_t i);
         const Vector& operator[](size_t i) const;
@@ -38,11 +33,12 @@ namespace matrix
         bool IsZero() const;
         bool IsIdentity() const;
         bool IsSquare() const;
-        bool IsSameDim(const Matrix& other) const;
+        bool IsSameDim(const Matrix& rhs) const;
 
         void SetZero();
         void SetIdentity();
         
+        Matrix Multiply(const Matrix& rhs) const;
         Matrix& Scale(double scalar);
         Matrix Transpose() const;
 
@@ -62,12 +58,24 @@ namespace matrix
 
         static constexpr double kEpsilon = 0.0000001;
 
+
+        friend Matrix operator+(Matrix lhs, const Matrix& addend);
+        friend Matrix operator-(Matrix lhs, const Matrix& subtrahend);
+        friend bool operator==(const Matrix& lhs, const Matrix& rhs);
+        friend bool operator!=(const Matrix& lhs, const Matrix& rhs);
+
         friend std::ostream& operator<<(std::ostream& output, const Matrix& matrix);
         friend void swap(Matrix& m1, Matrix& m2);
     };
 
+
+    Matrix operator+(Matrix lhs, const Matrix& addend);
+    Matrix operator-(Matrix lhs, const Matrix& subtrahend);
+    bool operator==(const Matrix& lhs, const Matrix& rhs);
+    bool operator!=(const Matrix& lhs, const Matrix& rhs);
+
     std::ostream& operator<<(std::ostream& output, const Matrix& matrix);
-    void swap(Matrix& m1, Matrix& m2);
+    void swap(Matrix& lhs, Matrix& rhs);
     Matrix pow(Matrix matrix, size_t exp);
 }
 

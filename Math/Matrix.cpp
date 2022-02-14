@@ -25,17 +25,17 @@ Matrix::Matrix(size_t new_row_size, size_t new_column_size, double new_value) :
     DEBUG_LOG("matrix direct constructor", DEBUG_MODE);
     std::for_each(data_, data_ + row_size_, [this, new_value](Vector& vec) {vec = std::move(Vector(this->column_size_, new_value)); });
 }
-Matrix::Matrix(const Matrix& other) :
-    row_size_(other.row_size_), column_size_(other.column_size_), data_(new Vector[other.row_size_])
+Matrix::Matrix(const Matrix& rhs) :
+    row_size_(rhs.row_size_), column_size_(rhs.column_size_), data_(new Vector[rhs.row_size_])
 {
     DEBUG_LOG("matrix copy constructor", DEBUG_MODE);
-    std::copy(other.data_, other.data_ + row_size_, data_);
+    std::copy(rhs.data_, rhs.data_ + row_size_, data_);
 }
-Matrix::Matrix(Matrix&& other) noexcept :
+Matrix::Matrix(Matrix&& rhs) noexcept :
     Matrix()
 {
     DEBUG_LOG("matrix move constructor", DEBUG_MODE);
-    swap(*this, other);
+    swap(*this, rhs);
 }
 Matrix::~Matrix()
 {
@@ -43,37 +43,15 @@ Matrix::~Matrix()
     delete[] data_;
 }
 
-Matrix& Matrix::operator=(const Matrix& other)
+Matrix& Matrix::operator=(Matrix rhs)
 {
-    DEBUG_LOG("matrix copy assignment", DEBUG_MODE);
-    Matrix temp(other);
-    swap(*this, temp);
-    return *this;
-}
-Matrix& Matrix::operator=(Matrix&& other) noexcept
-{
-    DEBUG_LOG("matrix move assignment", DEBUG_MODE);
-    Matrix temp(std::move(other));
-    swap(*this, temp);
+    DEBUG_LOG("matrix copy/move assignment", DEBUG_MODE);
+    swap(*this, rhs);
     return *this;
 }
 
 
-bool Matrix::operator==(const Matrix& other) const
-{
-    if (row_size_ != other.row_size_ || column_size_ != other.column_size_) return false;
 
-    for (size_t x = 0; x < row_size_; ++x)
-    {
-        if (data_[x] != other.data_[x]) return false;
-    }
-
-    return true;
-}
-bool Matrix::operator!=(const Matrix& other) const
-{
-    return !(*this == other);
-}
 Matrix& Matrix::operator+=(const Matrix& addend)
 {
     if (!this->IsSameDim(addend)) throw std::domain_error("error, addend matrix has invalid dimension");
@@ -93,38 +71,6 @@ Matrix& Matrix::operator-=(const Matrix& subtrahend)
     }
 
     return *this;
-}
-Matrix Matrix::operator+(const Matrix& addend) const
-{
-    Matrix sum(*this);
-    sum += addend;
-    return sum;
-}
-Matrix Matrix::operator-(const Matrix& subtrahend) const
-{
-    Matrix difference(*this);
-    difference -= subtrahend;
-    return difference;
-}
-Matrix Matrix::operator*(const Matrix& other) const
-{
-    //ij * jy = iy
-    if (column_size_ != other.row_size_) throw std::domain_error("error, matrix multiplication operand has invalid dimension");
-
-    Matrix product(row_size_, other.column_size_, 0.0);
-
-    for (size_t x = 0; x < product.row_size_; ++x)
-    {
-        for (size_t y = 0; y < product.column_size_; ++y)
-        {
-            for (size_t i = 0; i < column_size_; ++i)
-            {
-                product.data_[x][y] += data_[x][i] * other.data_[i][y];
-            }
-        }
-    }
-
-    return product;
 }
 
 Vector& Matrix::operator[](size_t i)
@@ -172,9 +118,9 @@ bool Matrix::IsIdentity() const
 
     return true;
 }
-bool Matrix::IsSameDim(const Matrix& other) const
+bool Matrix::IsSameDim(const Matrix& rhs) const
 {
-    return row_size_ == other.row_size_ && column_size_ == other.column_size_;
+    return row_size_ == rhs.row_size_ && column_size_ == rhs.column_size_;
 }
 
 
@@ -199,6 +145,30 @@ void Matrix::SetIdentity()
         }
     }
 }
+
+
+
+Matrix Matrix::Multiply(const Matrix& rhs) const
+{
+    //ij * jy = iy
+    if (column_size_ != rhs.row_size_) throw std::domain_error("error, matrix multiplication operand has invalid dimension");
+
+    Matrix product(row_size_, rhs.column_size_, 0.0);
+
+    for (size_t x = 0; x < product.row_size_; ++x)
+    {
+        for (size_t y = 0; y < product.column_size_; ++y)
+        {
+            for (size_t i = 0; i < column_size_; ++i)
+            {
+                product.data_[x][y] += data_[x][i] * rhs.data_[i][y];
+            }
+        }
+    }
+
+    return product;
+}
+
 Matrix& Matrix::Scale(double scalar)
 {
     for (size_t i = 0; i < row_size_; ++i)
@@ -208,6 +178,7 @@ Matrix& Matrix::Scale(double scalar)
 
     return *this;
 }
+
 Matrix Matrix::Transpose() const
 {
     Matrix transposed(column_size_, row_size_);
@@ -271,6 +242,35 @@ Matrix& Matrix::ColumnAdd(size_t srce_column, double scalar, size_t dest_column)
 
 
 
+Matrix matrix::operator+(Matrix lhs, const Matrix& addend)
+{
+    lhs += addend;
+    return lhs;
+}
+
+Matrix matrix::operator-(Matrix lhs, const Matrix& subtrahend)
+{
+    lhs -= subtrahend;
+    return lhs;
+}
+
+bool matrix::operator==(const Matrix& lhs, const Matrix& rhs)
+{
+    if (lhs.row_size_ != rhs.row_size_ || lhs.column_size_ != rhs.column_size_) return false;
+
+    for (size_t x = 0; x < lhs.row_size_; ++x)
+    {
+        if (lhs.data_[x] != rhs.data_[x]) return false;
+    }
+
+    return true;
+}
+
+bool matrix::operator!=(const Matrix& lhs, const Matrix& rhs)
+{
+    return !operator==(lhs, rhs);
+}
+
 
 std::ostream& matrix::operator<<(std::ostream& output, const Matrix& matrix)
 {
@@ -284,6 +284,7 @@ std::ostream& matrix::operator<<(std::ostream& output, const Matrix& matrix)
     }
     return output;
 }
+
 void matrix::swap(Matrix& m1, Matrix& m2)
 {
     using std::swap;
@@ -291,6 +292,7 @@ void matrix::swap(Matrix& m1, Matrix& m2)
     swap(m1.column_size_, m2.column_size_);
     swap(m1.data_, m2.data_);
 }
+
 Matrix matrix::pow(Matrix matrix, size_t exp)
 {
     Matrix power(matrix.RowDim(), matrix.ColumnDim());
@@ -298,8 +300,8 @@ Matrix matrix::pow(Matrix matrix, size_t exp)
 
     while (exp > 0)
     {
-        if (exp & 1) power = power * matrix;
-        matrix = matrix * matrix;
+        if (exp & 1) power = matrix.Multiply(matrix);
+        matrix = matrix.Multiply(matrix);
         exp >>= 1;
     }
 
